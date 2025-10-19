@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            justify-items: center;
+            padding: 10px;
+            background-color: rgb(19, 20, 44);
+        }
+
+        .main h2{
+            color: rgb(12, 99, 99);
+            margin-top: 10px;
+            text-align: center;
+        }
+        .main label{
+            color: rgb(4, 10, 63);
+        }
+        .main{
+            background-color: rgb(214, 224, 230);
+            padding: 20px;
+            color: rgb(3, 3, 31);
+            border: solid rgb(0, 0, 0) 1px;
+            border-radius: 10px;
+            margin-top: 90px;
+        }
+        .error {
+            color: rgb(163, 9, 9);
+            font-size: 12px;
+        }
+        input {
+            display: block;
+            margin-top: 15px;
+            padding: 8px;
+            width: 250px;
+            border-radius: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+    <h2>Registration Form</h2>
+    <form id="regForm" onsubmit="return validateForm()">
+        <label>Name:</label>
+        <input type="text" id="name" placeholder="Enter your Name">
+        <span id="nameError" class="error"></span>
+        <br>
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="Enter your Email">
+        <span id="emailError" class="error"></span>
+        <br>
+        <label>Password:</label>
+        <input type="password" id="password" placeholder="Enter your Password">
+        <span id="passError" class="error"></span>
+        <br>
+        <button type="submit" id="submitBtn" disabled>Submit</button>
+    </form>
+
+
+    <script>
+        const nameField = document.getElementById("name");
+        const emailField = document.getElementById("email");
+        const passwordField = document.getElementById("password");
+        const submitBtn = document.getElementById("submitBtn");
+
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const passError = document.getElementById("passError");
+
+
+        function checkValidation() {
+            let isValid = true;
+            if (nameField.value === "") {
+                nameError.textContent = "Name cannot be empty";
+                isValid = false;
+            } else {
+                nameError.textContent = "";
+            }
+
+
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailField.value.match(emailPattern)) {
+                emailError.textContent = "Enter a valid email";
+                isValid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+
+            if (passwordField.value.length < 6) {
+                passError.textContent = "Password must be at least 6 characters";
+                isValid = false;
+            } else {
+                passError.textContent = "";
+            }
+
+
+            submitBtn.disabled = !isValid;
+        }
+
+
+        nameField.addEventListener("input", checkValidation);
+        emailField.addEventListener("input", checkValidation);
+        passwordField.addEventListener("input", checkValidation);
+
+
+        function validateForm() {
+            checkValidation();
+            if (submitBtn.disabled) {
+                alert("Please fix errors before submitting");
+                return false;
+            }
+            alert("Form submitted successfully!");
+            return true;
+        }
+    </script>
+    </div>
+</body>
+
+</html>
